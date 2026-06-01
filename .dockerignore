@@ -1,0 +1,9 @@
+node_modules
+npm-debug.log
+.git
+.trae
+src
+*.md
+*.ps1
+*.js
+!server.js
