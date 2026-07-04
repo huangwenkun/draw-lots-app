@@ -389,10 +389,8 @@
     }
 
     function generateQRCode() {
-      // 使用局域网 IP 地址而不是 localhost
-      const protocol = window.location.protocol;
-      const pathname = window.location.pathname;
-      const link = protocol + '//192.168.31.177:9999' + pathname + '?join=' + sessionId;
+      // 自动使用当前访问的域名（支持本地和云服务器部署）
+      const link = window.location.origin + window.location.pathname + '?join=' + sessionId;
       document.getElementById('shareLink').value = link;
       const encoded = encodeURIComponent(link);
       document.getElementById('qrCode').innerHTML = '<img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=' + encoded + '" alt="二维码">';

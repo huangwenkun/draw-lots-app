@@ -154,8 +154,15 @@ io.on('connection', (socket) => {
 });
 
 const PORT = process.env.PORT || 9999;
+const isProduction = process.env.NODE_ENV === 'production';
+
 server.listen(PORT, '0.0.0.0', () => {
   console.log(`服务器运行在 http://localhost:${PORT}/`);
-  console.log(`📱 手机参与地址: http://192.168.31.177:${PORT}/`);
-  console.log(`⚠️  注意：请确保手机和电脑在同一 WiFi 网络下`);
+  
+  if (!isProduction) {
+    console.log(`📱 手机参与地址: http://192.168.31.177:${PORT}/`);
+    console.log(`⚠️  注意：请确保手机和电脑在同一 WiFi 网络下`);
+  } else {
+    console.log(`🚀 云服务器部署成功！`);
+  }
 });
