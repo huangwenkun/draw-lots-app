@@ -61,10 +61,10 @@ const io = new Server(server, {
 let sessions = {};
 
 io.on('connection', (socket) => {
-  console.log('???????:', socket.id, 'Transport:', socket.conn.transport.name);
+  console.log('用户连接:', socket.id, 'Transport:', socket.conn.transport.name);
 
   socket.on('createSession', (sessionId) => {
-    console.log('???createSession:', sessionId);
+    console.log('创建房间:', sessionId);
     if (!sessions[sessionId]) {
       sessions[sessionId] = {
         maxNumber: 20,
@@ -75,11 +75,11 @@ io.on('connection', (socket) => {
     }
     socket.join(sessionId);
     socket.emit('sessionData', sessions[sessionId]);
-    console.log('????sessionData????????:', sessionId);
+    console.log('发送房间数据:', sessionId);
   });
 
   socket.on('joinSession', (sessionId) => {
-    console.log('???joinSession:', sessionId);
+    console.log('加入房间:', sessionId);
     socket.join(sessionId);
     socket.emit('sessionData', sessions[sessionId] || null);
     
@@ -149,11 +149,13 @@ io.on('connection', (socket) => {
   });
 
   socket.on('disconnect', () => {
-    console.log('??????:', socket.id);
+    console.log('用户断开:', socket.id);
   });
 });
 
 const PORT = process.env.PORT || 9999;
-server.listen(PORT, () => {
-  console.log(`Server running at http://localhost:${PORT}/`);
+server.listen(PORT, '0.0.0.0', () => {
+  console.log(`服务器运行在 http://localhost:${PORT}/`);
+  console.log(`📱 手机参与地址: http://192.168.31.177:${PORT}/`);
+  console.log(`⚠️  注意：请确保手机和电脑在同一 WiFi 网络下`);
 });
