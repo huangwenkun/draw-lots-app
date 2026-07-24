@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>抽签助手 - 随机抽签工具</title>
+  <title>��ǩ���� - �����ǩ����</title>
+  <!-- UTF-8 encoding fix -->
   <script src="/socket.io.js"></script>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -62,53 +63,53 @@
 </head>
 <body>
   <div id="loadingPage" class="loading">
-    <div>连接服务器...</div>
-    <p>请稍候...</p>
+    <div>���ӷ�����...</div>
+    <p>���Ժ�...</p>
   </div>
 
   <div id="adminPage" class="container" style="display: none;">
     <div class="header">
-      <h1>抽签助手</h1>
-      <p>创建房间已准备就绪</p>
+      <h1>��ǩ����</h1>
+      <p>����������׼������</p>
     </div>
 
     <div class="tabs">
-      <button class="tab active" onclick="switchTab('settings')">设置</button>
-      <button class="tab" onclick="switchTab('draw')">抽签</button>
+      <button class="tab active" onclick="switchTab('settings')">����</button>
+      <button class="tab" onclick="switchTab('draw')">��ǩ</button>
     </div>
 
     <div id="settingsPage" class="page active">
       <div class="card">
-        <div class="card-title">抽签人数</div>
+        <div class="card-title">��ǩ����</div>
         <div style="display: flex; align-items: center; gap: 10px;">
-          <span style="color: #6b7280;">抽签范围 1 -</span>
+          <span style="color: #6b7280;">��ǩ��Χ 1 -</span>
           <input type="number" id="maxNumber" value="20" min="2" max="50" style="width: 80px; text-align: center;">
-          <button onclick="updateMaxNumber()" class="btn">确认</button>
+          <button onclick="updateMaxNumber()" class="btn">ȷ��</button>
         </div>
         <input type="range" id="maxSlider" min="2" max="50" value="20" class="slider" oninput="syncSlider()">
       </div>
 
       <div class="card">
-        <div class="card-title">固定号码设置</div>
-        <p style="font-size: 12px; color: #6b7280; margin-bottom: 12px;">可设置固定号码给指定用户</p>
+        <div class="card-title">�̶���������</div>
+        <p style="font-size: 12px; color: #6b7280; margin-bottom: 12px;">�����ù̶������ָ���û�</p>
         <div class="fixed-row">
           <div class="fixed-badge">1</div>
-          <input type="text" id="fixed1" placeholder="1号固定人选" style="flex: 1; padding: 10px; border-radius: 12px; border: 2px solid #fef3c7;">
+          <input type="text" id="fixed1" placeholder="1�Ź̶���ѡ" style="flex: 1; padding: 10px; border-radius: 12px; border: 2px solid #fef3c7;">
         </div>
         <div class="fixed-row">
           <div class="fixed-badge">2</div>
-          <input type="text" id="fixed2" placeholder="2号固定人选" style="flex: 1; padding: 10px; border-radius: 12px; border: 2px solid #fef3c7;">
+          <input type="text" id="fixed2" placeholder="2�Ź̶���ѡ" style="flex: 1; padding: 10px; border-radius: 12px; border: 2px solid #fef3c7;">
         </div>
-        <button onclick="saveSettings()" class="btn" style="width: 100%; margin-top: 10px;">保存设置</button>
+        <button onclick="saveSettings()" class="btn" style="width: 100%; margin-top: 10px;">��������</button>
       </div>
 
       <div class="card">
-        <div class="card-title">邀请参与者</div>
+        <div class="card-title">���������</div>
         <div class="qr-section">
           <div class="qr-code" id="qrCode"></div>
           <div class="share-link">
             <input type="text" id="shareLink" readonly>
-            <button class="copy-btn" onclick="copyLink()">复制</button>
+            <button class="copy-btn" onclick="copyLink()">����</button>
           </div>
         </div>
       </div>
@@ -116,32 +117,32 @@
 
     <div id="drawPage" class="page">
       <div class="card">
-        <div class="card-title">已加入 <span class="count-badge" id="userCount">0 / 20</span></div>
+        <div class="card-title">�Ѽ��� <span class="count-badge" id="userCount">0 / 20</span></div>
         <div style="display: flex; justify-content: space-between; padding: 10px; background: #f3f4f6; border-radius: 10px;">
-          <span style="color: #6b7280;">抽签人数</span>
+          <span style="color: #6b7280;">��ǩ����</span>
           <span id="displayMaxNumber" style="font-weight: 600; color: #6366f1;">20</span>
         </div>
       </div>
 
       <div class="card">
-        <div class="card-title">添加参与者</div>
+        <div class="card-title">��Ӳ�����</div>
         <div class="input-group">
-          <input type="text" id="userInput" placeholder="输入参与者姓名" class="input">
-          <button onclick="addUser()" class="btn">+ 添加</button>
+          <input type="text" id="userInput" placeholder="�������������" class="input">
+          <button onclick="addUser()" class="btn">+ ���</button>
         </div>
         <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width: 0%;"></div></div>
-        <p style="text-align: center; color: #6b7280; margin-bottom: 15px;" id="progressText">还需 20 人</p>
+        <p style="text-align: center; color: #6b7280; margin-bottom: 15px;" id="progressText">���� 20 ��</p>
         <div id="userList" class="scrollable"></div>
       </div>
 
       <div class="card" style="padding: 0;">
-        <button onclick="draw()" id="drawBtn" class="btn btn-large" disabled><span>还需 20 人</span></button>
+        <button onclick="draw()" id="drawBtn" class="btn btn-large" disabled><span>���� 20 ��</span></button>
       </div>
 
       <div class="card">
-        <div class="card-title">抽签结果</div>
+        <div class="card-title">��ǩ���</div>
         <div id="resultList">
-          <div class="empty-state"><div class="icon">🎲</div><p>开始抽签后显示结果</p></div>
+          <div class="empty-state"><div class="icon">?</div><p>��ʼ��ǩ����ʾ���</p></div>
         </div>
       </div>
     </div>
@@ -149,36 +150,36 @@
 
   <div id="joinPage" class="container" style="display: none;">
     <div class="header">
-      <h1>加入抽签</h1>
-      <p>欢迎参与抽签活动</p>
+      <h1>�����ǩ</h1>
+      <p>��ӭ�����ǩ�</p>
     </div>
 
     <div class="card">
       <div class="status-card">
         <div id="statusIcon"></div>
-        <div style="font-size: 20px; font-weight: 600; margin-bottom: 10px;" id="statusTitle">等待活动准备中</div>
-        <div style="font-size: 14px; color: #6b7280;" id="statusDesc">请等待管理员开始</div>
+        <div style="font-size: 20px; font-weight: 600; margin-bottom: 10px;" id="statusTitle">�ȴ��׼����</div>
+        <div style="font-size: 14px; color: #6b7280;" id="statusDesc">��ȴ�����Ա��ʼ</div>
       </div>
     </div>
 
     <div class="card">
-      <div class="card-title">已加入 <span class="count-badge" id="joinUserCount">0 / 20</span></div>
+      <div class="card-title">�Ѽ��� <span class="count-badge" id="joinUserCount">0 / 20</span></div>
       <div class="progress-bar"><div class="progress-fill" id="joinProgressFill" style="width: 0%;"></div></div>
-      <p style="text-align: center; color: #6b7280; margin-bottom: 15px;" id="joinProgressText">等待其他参与者...</p>
+      <p style="text-align: center; color: #6b7280; margin-bottom: 15px;" id="joinProgressText">�ȴ�����������...</p>
       <div id="joinUserList" class="scrollable"></div>
     </div>
 
     <div class="card" id="joinForm">
-      <div class="card-title">输入你的姓名</div>
-      <input type="text" id="joinUserName" placeholder="请输入你的姓名参与" style="width: 100%; padding: 14px; border-radius: 12px; text-align: center; margin-bottom: 15px;">
-      <button onclick="joinDrawing()" id="joinBtn" class="btn btn-success btn-large">加入抽签</button>
+      <div class="card-title">�����������</div>
+      <input type="text" id="joinUserName" placeholder="�����������������" style="width: 100%; padding: 14px; border-radius: 12px; text-align: center; margin-bottom: 15px;">
+      <button onclick="joinDrawing()" id="joinBtn" class="btn btn-success btn-large">�����ǩ</button>
     </div>
 
     <div class="card success-card" id="joinSuccessCard" style="display: none;">
       <div class="status-card">
-        <div>✓</div>
-        <div style="font-size: 20px; font-weight: 600; margin-bottom: 10px;" id="joinWelcomeText">已加入</div>
-        <div style="font-size: 14px; color: #6b7280;">等待抽签开始</div>
+        <div>?</div>
+        <div style="font-size: 20px; font-weight: 600; margin-bottom: 10px;" id="joinWelcomeText">�Ѽ���</div>
+        <div style="font-size: 14px; color: #6b7280;">�ȴ���ǩ��ʼ</div>
       </div>
     </div>
   </div>
@@ -196,19 +197,19 @@
     let isAdmin = true;
 
     socket.on('connect', function() {
-      console.log('WebSocket连接成功');
+      console.log('WebSocket���ӳɹ�');
       init();
     });
 
     socket.on('connect_error', function(error) {
-      console.error('WebSocket连接错误:', error);
-      document.getElementById('loadingPage').innerHTML = '<div>连接失败</div><p>无法连接服务器，请刷新重试</p><button onclick="window.location.reload()" class="btn btn-large" style="margin-top: 20px;">刷新</button>';
+      console.error('WebSocket���Ӵ���:', error);
+      document.getElementById('loadingPage').innerHTML = '<div>����ʧ��</div><p>�޷����ӷ���������ˢ������</p><button onclick="window.location.reload()" class="btn btn-large" style="margin-top: 20px;">ˢ��</button>';
     });
 
     socket.on('disconnect', function(reason) {
-      console.log('WebSocket断开连接:', reason);
+      console.log('WebSocket�Ͽ�����:', reason);
       if (reason === 'io server disconnect') {
-        alert('服务器断开连接');
+        alert('�������Ͽ�����');
       }
     });
 
@@ -253,14 +254,14 @@
         }
       };
       socket.emit('updateSettings', { sessionId: sessionId, settings: settings });
-      alert('设置已保存');
+      alert('�����ѱ���');
     }
 
     function addUser() {
       const input = document.getElementById('userInput');
       const name = input.value.trim();
       if (!name) return;
-      if (users.some(function(u) { return u.name === name; })) { alert('该用户已存在'); return; }
+      if (users.some(function(u) { return u.name === name; })) { alert('���û��Ѵ���'); return; }
       
       const user = { id: Date.now().toString(), name: name, isAdmin: true };
       socket.emit('addUser', { sessionId: sessionId, user: user });
@@ -270,14 +271,14 @@
     function draw() {
       socket.emit('draw', sessionId);
       const btn = document.getElementById('drawBtn');
-      btn.innerHTML = '<span class="animate-spin">抽签中...</span>';
+      btn.innerHTML = '<span class="animate-spin">��ǩ��...</span>';
       btn.disabled = true;
     }
 
     function joinDrawing() {
       const name = document.getElementById('joinUserName').value.trim();
-      if (!name) { alert('请输入姓名'); return; }
-      if (users.some(function(u) { return u.name === name; })) { alert('该用户已存在'); return; }
+      if (!name) { alert('����������'); return; }
+      if (users.some(function(u) { return u.name === name; })) { alert('���û��Ѵ���'); return; }
       
       const user = { id: Date.now().toString(), name: name, isAdmin: false };
       socket.emit('addUser', { sessionId: sessionId, user: user });
@@ -285,12 +286,12 @@
       myName = name;
       isJoined = true;
       document.getElementById('joinBtn').disabled = true;
-      document.getElementById('joinBtn').innerHTML = '<span class="animate-spin">加入中...</span>';
+      document.getElementById('joinBtn').innerHTML = '<span class="animate-spin">������...</span>';
       
       setTimeout(function() {
         document.getElementById('joinForm').style.display = 'none';
         document.getElementById('joinSuccessCard').style.display = 'block';
-        document.getElementById('joinWelcomeText').textContent = '欢迎 ' + name + ' 已加入';
+        document.getElementById('joinWelcomeText').textContent = '��ӭ ' + name + ' �Ѽ���';
       }, 500);
     }
 
@@ -315,11 +316,11 @@
     function updateAdminUserList() {
       const list = document.getElementById('userList');
       if (users.length === 0) {
-        list.innerHTML = '<p style="text-align: center; color: #9ca3af; padding: 15px 0;">暂无参与者</p>';
+        list.innerHTML = '<p style="text-align: center; color: #9ca3af; padding: 15px 0;">���޲�����</p>';
         return;
       }
       list.innerHTML = users.map(function(user) {
-        return '<div class="user-item"><span>' + user.name + (user.isAdmin ? '<span class="admin-badge">管理员</span>' : '') + '</span></div>';
+        return '<div class="user-item"><span>' + user.name + (user.isAdmin ? '<span class="admin-badge">����Ա</span>' : '') + '</span></div>';
       }).join('');
     }
 
@@ -328,15 +329,15 @@
       const percentage = (count / maxNumber) * 100;
       document.getElementById('userCount').textContent = count + ' / ' + maxNumber;
       document.getElementById('progressFill').style.width = percentage + '%';
-      document.getElementById('progressText').textContent = count >= maxNumber ? '人数已满，可以开始' : '还需 ' + (maxNumber - count) + ' 人';
+      document.getElementById('progressText').textContent = count >= maxNumber ? '�������������Կ�ʼ' : '���� ' + (maxNumber - count) + ' ��';
       
       const drawBtn = document.getElementById('drawBtn');
       if (count >= maxNumber) {
         drawBtn.disabled = false;
-        drawBtn.innerHTML = '<span>开始抽签</span>';
+        drawBtn.innerHTML = '<span>��ʼ��ǩ</span>';
       } else {
         drawBtn.disabled = true;
-        drawBtn.innerHTML = '<span>还需 ' + (maxNumber - count) + ' 人</span>';
+        drawBtn.innerHTML = '<span>���� ' + (maxNumber - count) + ' ��</span>';
       }
     }
 
@@ -348,20 +349,20 @@
     function updateJoinUI() {
       document.getElementById('joinUserCount').textContent = users.length + ' / ' + maxNumber;
       document.getElementById('joinProgressFill').style.width = (users.length / maxNumber * 100) + '%';
-      document.getElementById('joinProgressText').textContent = users.length >= maxNumber ? '人数已满，等待抽签' : '还需 ' + (maxNumber - users.length) + ' 人加入';
+      document.getElementById('joinProgressText').textContent = users.length >= maxNumber ? '�����������ȴ���ǩ' : '���� ' + (maxNumber - users.length) + ' �˼���';
 
       const userListEl = document.getElementById('joinUserList');
       if (users.length === 0) {
-        userListEl.innerHTML = '<p style="text-align: center; color: #9ca3af; padding: 15px 0;">暂无参与者</p>';
+        userListEl.innerHTML = '<p style="text-align: center; color: #9ca3af; padding: 15px 0;">���޲�����</p>';
       } else {
         userListEl.innerHTML = users.map(function(user) {
-          return '<div class="user-item"><span>' + user.name + (user.isAdmin ? '<span class="admin-badge">管理员</span>' : '') + '</span>' + (user.name === myName ? '<span style="color: #10b981; font-size: 12px;">（我）</span>' : '') + '</div>';
+          return '<div class="user-item"><span>' + user.name + (user.isAdmin ? '<span class="admin-badge">����Ա</span>' : '') + '</span>' + (user.name === myName ? '<span style="color: #10b981; font-size: 12px;">���ң�</span>' : '') + '</div>';
         }).join('');
       }
 
       if (results.length > 0) {
-        document.getElementById('statusTitle').textContent = '抽签完成';
-        document.getElementById('statusDesc').textContent = '查看你的结果';
+        document.getElementById('statusTitle').textContent = '��ǩ���';
+        document.getElementById('statusDesc').textContent = '�鿴��Ľ��';
         document.getElementById('joinForm').style.display = 'none';
         
         const myResult = results.find(function(r) {
@@ -370,7 +371,7 @@
         });
         
         if (myResult) {
-          document.getElementById('joinWelcomeText').textContent = '你抽到了#' + myResult.number;
+          document.getElementById('joinWelcomeText').textContent = '��鵽��#' + myResult.number;
           document.getElementById('joinSuccessCard').style.display = 'block';
         }
       }
@@ -379,26 +380,26 @@
     function renderResultList() {
       const list = document.getElementById('resultList');
       if (results.length === 0) {
-        list.innerHTML = '<div class="empty-state"><div class="icon">🎲</div><p>开始抽签后显示结果</p></div>';
+        list.innerHTML = '<div class="empty-state"><div class="icon">?</div><p>��ʼ��ǩ����ʾ���</p></div>';
         return;
       }
       list.innerHTML = results.map(function(result) {
         const user = users.find(function(u) { return u.id === result.userId; });
-        return '<div class="result-item' + (result.isFixed ? ' fixed' : '') + '"><div class="result-badge">' + result.number + '</div><div style="flex: 1;"><p>' + (user ? user.name : '未知') + '</p>' + (result.isFixed ? '<span style="font-size: 10px; color: #d97706; background: #fef3c7; padding: 2px 6px; border-radius: 4px;">固定</span>' : '') + '</div></div>';
+        return '<div class="result-item' + (result.isFixed ? ' fixed' : '') + '"><div class="result-badge">' + result.number + '</div><div style="flex: 1;"><p>' + (user ? user.name : 'δ֪') + '</p>' + (result.isFixed ? '<span style="font-size: 10px; color: #d97706; background: #fef3c7; padding: 2px 6px; border-radius: 4px;">�̶�</span>' : '') + '</div></div>';
       }).join('');
     }
 
     function generateQRCode() {
-      // 自动使用当前访问的域名（支持本地和云服务器部署）
+      // �Զ�ʹ�õ�ǰ���ʵ�������֧�ֱ��غ��Ʒ���������
       const link = window.location.origin + window.location.pathname + '?join=' + sessionId;
       document.getElementById('shareLink').value = link;
       const encoded = encodeURIComponent(link);
-      document.getElementById('qrCode').innerHTML = '<img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=' + encoded + '" alt="二维码">';
+      document.getElementById('qrCode').innerHTML = '<img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=' + encoded + '" alt="��ά��">';
     }
 
     function copyLink() {
       const link = document.getElementById('shareLink').value;
-      navigator.clipboard.writeText(link).then(function() { alert('链接已复制'); });
+      navigator.clipboard.writeText(link).then(function() { alert('�����Ѹ���'); });
     }
 
     function switchTab(tab) {
@@ -419,8 +420,8 @@
     function updateMaxNumber() {
       const input = document.getElementById('maxNumber');
       const num = parseInt(input.value, 10);
-      if (num < 2) { alert('最少2人'); input.value = '2'; return; }
-      if (num > 50) { alert('最多50人'); input.value = '50'; return; }
+      if (num < 2) { alert('����2��'); input.value = '2'; return; }
+      if (num > 50) { alert('���50��'); input.value = '50'; return; }
       saveSettings();
     }
 
