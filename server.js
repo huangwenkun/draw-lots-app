@@ -61,10 +61,10 @@ const io = new Server(server, {
 let sessions = {};
 
 io.on('connection', (socket) => {
-  console.log('ç”¨æˆ·è¿žæŽ¥:', socket.id, 'Transport:', socket.conn.transport.name);
+  console.log('ÓÃ»§Á¬½Ó:', socket.id, 'Transport:', socket.conn.transport.name);
 
   socket.on('createSession', (sessionId) => {
-    console.log('åˆ›å»ºæˆ¿é—´:', sessionId);
+    console.log('´´½¨·¿¼ä:', sessionId);
     if (!sessions[sessionId]) {
       sessions[sessionId] = {
         maxNumber: 20,
@@ -75,11 +75,11 @@ io.on('connection', (socket) => {
     }
     socket.join(sessionId);
     socket.emit('sessionData', sessions[sessionId]);
-    console.log('å‘é€æˆ¿é—´æ•°æ®:', sessionId);
+    console.log('·¢ËÍ·¿¼äÊý¾Ý:', sessionId);
   });
 
   socket.on('joinSession', (sessionId) => {
-    console.log('åŠ å…¥æˆ¿é—´:', sessionId);
+    console.log('¼ÓÈë·¿¼ä:', sessionId);
     socket.join(sessionId);
     socket.emit('sessionData', sessions[sessionId] || null);
     
@@ -149,7 +149,7 @@ io.on('connection', (socket) => {
   });
 
   socket.on('disconnect', () => {
-    console.log('ç”¨æˆ·æ–­å¼€:', socket.id);
+    console.log('ÓÃ»§¶Ï¿ª:', socket.id);
   });
 });
 
@@ -157,12 +157,12 @@ const PORT = process.env.PORT || 9999;
 const isProduction = process.env.NODE_ENV === 'production';
 
 server.listen(PORT, '0.0.0.0', () => {
-  console.log(`æœåŠ¡å™¨è¿è¡Œåœ¨ http://localhost:${PORT}/`);
+  console.log(`·þÎñÆ÷ÔËÐÐÔÚ http://localhost:${PORT}/`);
   
   if (!isProduction) {
-    console.log(`ðŸ“± æ‰‹æœºå‚ä¸Žåœ°å€: http://192.168.31.177:${PORT}/`);
-    console.log(`âš ï¸  æ³¨æ„ï¼šè¯·ç¡®ä¿æ‰‹æœºå’Œç”µè„‘åœ¨åŒä¸€ WiFi ç½‘ç»œä¸‹`);
+    console.log(`? ÊÖ»ú²ÎÓëµØÖ·: http://192.168.31.177:${PORT}/`);
+    console.log(`??  ×¢Òâ£ºÇëÈ·±£ÊÖ»úºÍµçÄÔÔÚÍ¬Ò» WiFi ÍøÂçÏÂ`);
   } else {
-    console.log(`ðŸš€ äº‘æœåŠ¡å™¨éƒ¨ç½²æˆåŠŸï¼`);
+    console.log(`? ÔÆ·þÎñÆ÷²¿Êð³É¹¦£¡`);
   }
 });
